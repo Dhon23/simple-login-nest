@@ -7,12 +7,13 @@ import { errorHandler } from './middlewares/errorHandler';
 export class Authentication implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     try {
-      const { access_token } = req.headers;
-      if (!access_token) {
+      const { authorization } = req.headers;
+
+      if (!authorization) {
         throw { code: 2 };
       }
-      const decodedToken: any = verifyToken(access_token);
-      
+      const decodedToken: any = verifyToken(authorization.split(' ')[1]);
+
       req.headers.user = decodedToken;
       next();
     } catch (error) {

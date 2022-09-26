@@ -1,4 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Req } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -45,6 +46,7 @@ export class UsersController {
   }
 
   @Get('pending')
+  @ApiBearerAuth('access_token')
   async pendingEmail() {
     try {
       return this.usersService.findAll({ status: 'pending' });
@@ -54,6 +56,7 @@ export class UsersController {
   }
 
   @Patch('pending/:email')
+  @ApiBearerAuth('access_token')
   async changeStatus(
     @Param('email') email: string,
     @Body() updateUserDto: UpdateUserDto,
@@ -70,6 +73,7 @@ export class UsersController {
   }
 
   @Get()
+  @ApiBearerAuth('access_token')
   findAll() {
     return this.usersService.findAll({});
   }

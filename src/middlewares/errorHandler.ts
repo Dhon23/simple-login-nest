@@ -5,7 +5,7 @@ export const errorHandler = (error: {
   code: number;
   name: string;
 }) => {
-  console.log(error);
+  // console.log(error);
   if (error.name === 'ValidationError') {
     let message: string;
     Object.keys(error.errors).forEach((key) => {
